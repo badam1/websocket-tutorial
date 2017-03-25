@@ -26,13 +26,13 @@ public class WebSocketService {
     }
 
     public void testMessageFromService() {
-        log.info("testMessageFromService() - testing message sending from a service class");
         try {
             Thread.sleep(3000); // just to simulate delay 3 sec
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         HelloMessage message = new HelloMessage("Service Class");
+        log.info("testMessageFromService() - testing message sending from a service class {}",message);
         messagingTemplate.convertAndSend("/topic/greetings", new Greeting("Hello " + message.getName() + "!"));
     }
 }
