@@ -48,4 +48,9 @@ public class WebSocketService {
         log.info("sendMyMoodFromOtherPage() - send myMood from other page {}",myMood);
         messagingTemplate.convertAndSend("/topic/mood", new Greeting("My mood " + myMood.getMyMood().getName() + "!"));
     }
+
+    public void sendWelcomeMessage(HelloMessage message) {
+        log.info("sendWelcomeMessage() - send welcome message to the index page");
+        messagingTemplate.convertAndSend("/topic/welcome", new Greeting("Welcome " + message.getName() + " to Websocket test!"));
+    }
 }

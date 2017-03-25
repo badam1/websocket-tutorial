@@ -41,6 +41,7 @@ public class GreetingController {
     public Greeting greeting(HelloMessage message) throws Exception {
         Thread.sleep(1000); // simulated delay
         log.info("greeting() - greeting message sent {}",message);
+        webSocketService.sendWelcomeMessage(message);
         return new Greeting("Hello " + message.getName() + "!");
     }
 

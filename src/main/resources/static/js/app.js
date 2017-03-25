@@ -28,6 +28,9 @@ function connect() {
         stompClient.subscribe('/topic/mood', function (myMood) {
             showMyMood(JSON.parse(myMood.body).content);
         });
+        stompClient.subscribe('/topic/welcome',function (message) {
+            showWelcomeMessage(JSON.parse(message.body).content);
+        })
     });
 }
 
@@ -55,7 +58,12 @@ function showMyMood(myMood) {
     $("#greetings").append("<tr><td>" + myMood + "</td></tr>");
 }
 
+function showWelcomeMessage(message) {
+    $("#welcome").html("<h1>" + message + "</h1>");
+}
+
 $(function () {
+
     $("form").on('submit', function (e) {
         e.preventDefault();
     });
