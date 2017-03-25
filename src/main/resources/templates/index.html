@@ -47,7 +47,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-7">
                     <form class="form-inline">
                         <div class="form-group">
                             <label for="name">What is your name?</label>
@@ -62,9 +62,9 @@
                         </div>
                         <button id="send" class="btn btn-default" type="submit">Send</button>
                     </form>
-                    <a th:href="@{/websocket/other-page}" class="btn btn-link">Other page</a>
                 </div>
             </div>
+            <a th:href="@{/websocket/other-page}" class="btn btn-link">Other page</a>
             <div class="row">
                 <div class="col-md-12">
                     <table id="conversation" class="table table-striped">
