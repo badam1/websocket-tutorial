@@ -6,12 +6,12 @@ package com.bodansky.controller;
 
 import com.bodansky.domain.Greeting;
 import com.bodansky.domain.HelloMessage;
+import com.bodansky.service.WebSocketService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,11 +22,11 @@ public class GreetingController {
 
     private static final Logger log = LoggerFactory.getLogger(GreetingController.class);
 
-    private final SimpMessagingTemplate messagingTemplate;
+    private final WebSocketService webSocketService;
 
     @Autowired
-    public GreetingController(SimpMessagingTemplate messagingTemplate) {
-        this.messagingTemplate = messagingTemplate;
+    public GreetingController(WebSocketService webSocketService) {
+        this.webSocketService = webSocketService;
     }
 
     @GetMapping("/test")
@@ -45,8 +45,7 @@ public class GreetingController {
     @GetMapping("/other-page")
     public String otherPage() {
         log.info("otherPage() - send message from otherPage");
-        HelloMessage message = new HelloMessage("Adam");
-        messagingTemplate.convertAndSend("/topic/greetings",new Greeting("Hello " + message.getName() + "!"));
+        webSocketService.testMessageFromService();
         return "other-page";
     }
 }
