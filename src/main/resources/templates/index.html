@@ -37,7 +37,7 @@
             Javascript and reload this page!</h2></noscript>
         <div id="main-content" class="container">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <form class="form-inline">
                         <div class="form-group">
                             <label for="connect">WebSocket connection:</label>
@@ -52,6 +52,13 @@
                         <div class="form-group">
                             <label for="name">What is your name?</label>
                             <input type="text" id="name" class="form-control" placeholder="Your name here..."/>
+                            <label for="mood">How are you?</label>
+                            <select id="mood" class="form-control">
+                                <option value="BAD">Bad</option>
+                                <option value="GOOD">Good</option>
+                                <option value="SUPER">Super</option>
+                                <option value="SAD">Sad</option>
+                            </select>
                         </div>
                         <button id="send" class="btn btn-default" type="submit">Send</button>
                     </form>

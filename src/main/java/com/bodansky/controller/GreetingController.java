@@ -6,6 +6,7 @@ package com.bodansky.controller;
 
 import com.bodansky.domain.Greeting;
 import com.bodansky.domain.HelloMessage;
+import com.bodansky.domain.MyMood;
 import com.bodansky.service.WebSocketService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,15 +39,24 @@ public class GreetingController {
     @MessageMapping("/hello")
     @SendTo("/topic/greetings")
     public Greeting greeting(HelloMessage message) throws Exception {
-        Thread.sleep(3000); // simulated delay
+        Thread.sleep(1000); // simulated delay
         log.info("greeting() - greeting message sent {}",message);
         return new Greeting("Hello " + message.getName() + "!");
+    }
+
+    @MessageMapping("/mood")
+    @SendTo("/topic/mood")
+    public Greeting mood(MyMood myMood) throws Exception {
+        Thread.sleep(1500); // simulated delay
+        log.info("greeting() - greeting message sent {}",myMood);
+        return new Greeting("My mood is " + myMood.getMyMood().getName() + "!");
     }
 
     @GetMapping("/other-page")
     public String otherPage() {
         log.info("otherPage() - send message from otherPage");
-        webSocketService.testMessageFromService();
+        webSocketService.sendHelloMessageFromOtherPage();
+        webSocketService.sendMyMoodFromOtherPage();
         return "other-page";
     }
 }
