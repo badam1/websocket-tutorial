@@ -5,6 +5,7 @@ import lombok.*;
 /*
  * Created by Adam Bodansky on 2017.03.25..
  */
+
 @Getter
 @Setter
 @NoArgsConstructor

@@ -30,7 +30,7 @@ public class GreetingController {
         this.webSocketService = webSocketService;
     }
 
-    @GetMapping("/test")
+    @GetMapping("/index")
     public String index() {
         log.info("index() - open index.html");
         return "index";
@@ -54,7 +54,7 @@ public class GreetingController {
     }
 
     @GetMapping("/other-page")
-    public String otherPage() {
+    public String otherPage() throws InterruptedException {
         log.info("otherPage() - send message from otherPage");
         webSocketService.sendHelloMessageFromOtherPage();
         webSocketService.sendMyMoodFromOtherPage();

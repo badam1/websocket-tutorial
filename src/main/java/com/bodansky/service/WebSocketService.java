@@ -27,25 +27,17 @@ public class WebSocketService {
         this.messagingTemplate = messagingTemplate;
     }
 
-    public void sendHelloMessageFromOtherPage() {
-        try {
-            Thread.sleep(1000); // just to simulate delay 1 sec
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        HelloMessage message = new HelloMessage("Service Class");
-        log.info("sendHelloMessageFromOtherPage() - testing message sending from a service class {}",message);
+    public void sendHelloMessageFromOtherPage() throws InterruptedException {
+        Thread.sleep(1000); // just to simulate delay 1 sec
+        HelloMessage message = new HelloMessage("Other Page");
+        log.info("sendHelloMessageFromOtherPage() - testing message sending from a service class {}", message);
         messagingTemplate.convertAndSend("/topic/greetings", new Greeting("Hello " + message.getName() + "!"));
     }
 
-    public void sendMyMoodFromOtherPage() {
-        try {
-            Thread.sleep(1500); // just to simulate delay 1,5 sec
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    public void sendMyMoodFromOtherPage() throws InterruptedException {
+        Thread.sleep(1500); // just to simulate delay 1,5 sec
         MyMood myMood = new MyMood(Mood.SUPER);
-        log.info("sendMyMoodFromOtherPage() - send myMood from other page {}",myMood);
+        log.info("sendMyMoodFromOtherPage() - send myMood from other page {}", myMood);
         messagingTemplate.convertAndSend("/topic/mood", new Greeting("My mood " + myMood.getMyMood().getName() + "!"));
     }
 

@@ -68,13 +68,13 @@
                     </form>
                 </div>
             </div>
-            <a th:href="@{/websocket/other-page}" target="_blank" class="btn btn-link">Other page</a>
+            <a th:href="@{/websocket/other-page}" target="_blank" class="btn btn-link">Other page</a><span>click other page link to get a websocket message, which will send because you opened an other page</span>
             <div class="row">
                 <div class="col-md-12">
                     <table id="conversation" class="table table-striped">
                         <thead>
                             <tr>
-                                <th>Greetings</th>
+                                <th>Websocket messages</th>
                             </tr>
                         </thead>
                         <tbody id="greetings">
