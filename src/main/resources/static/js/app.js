@@ -2,6 +2,7 @@
  * Created by Adam Bodansky on 2017.03.25..
  */
 
+// STOMP (Simple Text Oriented Message Protocol)
 var stompClient = null;
 
 // window on load
@@ -51,7 +52,7 @@ function setConnected(connected) {
     $("#greetings").html("");
 }
 
-// create websocket connection
+// create websocket connection with add a SockJS mapping which is the endpoint in WebsocketConfig.class ('websocket-test')
 function connect() {
     var socket = new SockJS('/websocket-test');
     stompClient = Stomp.over(socket);
@@ -80,7 +81,7 @@ function doSubscribes() {
         // fire this function when message come to this subscribed mapping
         showMyMood(JSON.parse(myMood.body).content);
     });
-    stompClient.subscribe('/topic/welcome',function (message) {
+    stompClient.subscribe('/topic/welcome', function (message) {
         // fire this function when message come to this subscribed mapping
         showWelcomeMessage(JSON.parse(message.body).content);
     })

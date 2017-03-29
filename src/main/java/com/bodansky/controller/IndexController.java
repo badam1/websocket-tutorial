@@ -20,5 +20,4 @@ public class IndexController {
         log.info("IndexController - index() - redirect to index.html");
         return "redirect:/websocket/index";
     }
-
 }

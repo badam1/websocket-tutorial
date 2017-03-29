@@ -31,6 +31,8 @@ public class WebSocketService {
         Thread.sleep(1000); // just to simulate delay 1 sec
         HelloMessage message = new HelloMessage("Other Page");
         log.info("sendHelloMessageFromOtherPage() - testing message sending from a service class {}", message);
+
+        // send this message for all the clients who are subscribed for /topic/greetings mapping (see in app.js)
         messagingTemplate.convertAndSend("/topic/greetings", new Greeting("Hello " + message.getName() + "!"));
     }
 
@@ -38,11 +40,15 @@ public class WebSocketService {
         Thread.sleep(1500); // just to simulate delay 1,5 sec
         MyMood myMood = new MyMood(Mood.SUPER);
         log.info("sendMyMoodFromOtherPage() - send myMood from other page {}", myMood);
+
+        // send this message for all the clients who are subscribed for /topic/mood mapping (see in app.js)
         messagingTemplate.convertAndSend("/topic/mood", new Greeting("My mood " + myMood.getMyMood().getName() + "!"));
     }
 
     public void sendWelcomeMessage(HelloMessage message) {
         log.info("sendWelcomeMessage() - send welcome message to the index page");
+
+        // send this message for all the clients who are subscribed for /topic/welcome mapping (see in app.js)
         messagingTemplate.convertAndSend("/topic/welcome", new Greeting("Welcome " + message.getName() + " to Websocket test!"));
     }
 }

@@ -36,11 +36,21 @@ public class GreetingController {
         return "index";
     }
 
+    /*
+    *  In @MessageMapping the "/hello" is "/app/hello" but we need only "/hello" because we have a prefix("/app")
+    *  what we configure in websocket configuration.
+    *
+    *  @SendTo tell to us, where the response will go.
+    *
+    *  All the clients whose subscribed (in app.js) for this mapping will catch this response.
+    *
+    */
+
     @MessageMapping("/hello")
     @SendTo("/topic/greetings")
     public Greeting greeting(HelloMessage message) throws Exception {
         Thread.sleep(1000); // simulated delay
-        log.info("greeting() - greeting message sent {}",message);
+        log.info("greeting() - greeting message sent {}", message);
         webSocketService.sendWelcomeMessage(message);
         return new Greeting("Hello " + message.getName() + "!");
     }
@@ -49,7 +59,7 @@ public class GreetingController {
     @SendTo("/topic/mood")
     public Greeting mood(MyMood myMood) throws Exception {
         Thread.sleep(1500); // simulated delay
-        log.info("greeting() - greeting message sent {}",myMood);
+        log.info("greeting() - greeting message sent {}", myMood);
         return new Greeting("My mood is " + myMood.getMyMood().getName() + "!");
     }
 
