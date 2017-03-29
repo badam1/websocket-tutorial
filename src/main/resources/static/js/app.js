@@ -10,6 +10,7 @@ $(function () {
     preventFormDefault();
     bindConnectBtn();
     bindSendBtn();
+    bindDisconnectBtn();
 
 });
 
