@@ -32,3 +32,8 @@ a {
 p {
     font-weight: 700;
 }
+
+#chat {
+    max-height: 400px;
+    overflow-y: scroll;
+}
