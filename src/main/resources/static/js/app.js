@@ -95,6 +95,14 @@ function doSubscribes() {
             left();
         }
     });
+    stompClient.subscribe('/topic/chat', function (message) {
+        console.log(JSON.parse(message.body).content);
+        showChatMessage(message);
+    });
+    stompClient.subscribe('/topic/fontColor', function (message) {
+        console.log(JSON.parse(message.body).content);
+        removeColor(message);
+    });
 }
 
 function sendName() {

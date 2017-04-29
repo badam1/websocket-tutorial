@@ -14,4 +14,15 @@ import lombok.*;
 public class Message {
 
     private String content;
+    private String from;
+    private String color;
+
+    public Message(String content) {
+        this.content = content;
+    }
+
+    public Message(String content, String from) {
+        this.content = content;
+        this.from = from;
+    }
 }

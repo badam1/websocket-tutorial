@@ -20,12 +20,17 @@ $(function () {
 
     bindChangeLocalStreamSize();
     bindChangeRemoteVideoSize();
-    
+
     connect();
 
     var $body = $("body");
 
     $body.on("click", ".connectBtn", function () {
+        var color = $("#color").val();
+        window.sessionStorage.setItem('nickName', $("#nickName").val());
+        window.sessionStorage.setItem('fontColor', color);
+        stompClient.send("/app/fontColor", {}, JSON.stringify({'color': color}));
+        bindEnter();
         fadeInIconsFadeOutHeader();
         if (!isConnected) {
             $message.fadeOut("slow");
@@ -68,7 +73,7 @@ var localMicFlag = false;
 var remoteMicFlag = false;
 var remoteVidFlag = false;
 
-var bindLocalCameraBtnOnClick = function() {
+var bindLocalCameraBtnOnClick = function () {
     $('#local-vid').on('click', function () {
         if (localVidFlag === true) {
             enableLocalCamera();
@@ -78,7 +83,7 @@ var bindLocalCameraBtnOnClick = function() {
     });
 };
 
-var bindLocalMicrophoneOnClick = function() {
+var bindLocalMicrophoneOnClick = function () {
     $('#local-mic').on('click', function () {
         if (localMicFlag === true) {
             enableLocalMicrophone();
@@ -88,7 +93,7 @@ var bindLocalMicrophoneOnClick = function() {
     });
 };
 
-var bindRemoteCameraBtnOnClick = function() {
+var bindRemoteCameraBtnOnClick = function () {
     $('#remote-vid').on('click', function () {
         if (remoteVidFlag === true) {
             enableRemoteCamera();
@@ -98,7 +103,7 @@ var bindRemoteCameraBtnOnClick = function() {
     });
 };
 
-var bindRemoteMicrophoneOnClick = function() {
+var bindRemoteMicrophoneOnClick = function () {
     $('#remote-mic').on('click', function () {
         if (remoteMicFlag === true) {
             enableRemoteMicrophone();
@@ -108,7 +113,7 @@ var bindRemoteMicrophoneOnClick = function() {
     });
 };
 
-var disableLocalCamera = function() {
+var disableLocalCamera = function () {
     localVidFlag = true;
     $('#local-vid').css('color', 'red');
     console.log("camera off");
@@ -116,7 +121,7 @@ var disableLocalCamera = function() {
     nextRTC.localStream.getVideoTracks()[0].enabled = false;
 };
 
-var enableLocalCamera = function() {
+var enableLocalCamera = function () {
     $('#local-vid').css('color', '#222222');
     localVidFlag = false;
     console.log("camera on");
@@ -124,39 +129,39 @@ var enableLocalCamera = function() {
     nextRTC.localStream.getVideoTracks()[0].enabled = true;
 };
 
-var enableLocalMicrophone = function() {
+var enableLocalMicrophone = function () {
     $('#local-mic').css('color', '#222222').removeClass("fa-microphone-slash").addClass("fa-microphone");
     localMicFlag = false;
     nextRTC.localStream.getAudioTracks()[0].enabled = true;
 };
 
-var disableLocalMicrophone = function() {
+var disableLocalMicrophone = function () {
     localMicFlag = true;
     $('#local-mic').css('color', 'red').removeClass("fa-microphone").addClass("fa-microphone-slash");
     nextRTC.localStream.getAudioTracks()[0].enabled = false;
 };
 
-var disableRemoteCamera = function() {
+var disableRemoteCamera = function () {
     remoteVidFlag = true;
     $('#remote-vid').css('color', 'red');
     console.log("camera off");
     $('.remoteStream').fadeOut("fast");
 };
 
-var enableRemoteCamera = function() {
+var enableRemoteCamera = function () {
     $('#remote-vid').css('color', '#222222');
     remoteVidFlag = false;
     console.log("camera on");
     $('.remoteStream').fadeIn("fast");
 };
 
-var enableRemoteMicrophone = function() {
+var enableRemoteMicrophone = function () {
     $('#remote-mic').css('color', '#222222').removeClass("fa-volume-off").addClass("fa-volume-up");
     remoteMicFlag = false;
     $(".remote-vid").prop('muted', false);
 };
 
-var disableRemoteMicrophone = function() {
+var disableRemoteMicrophone = function () {
     remoteMicFlag = true;
     $('#remote-mic').css('color', 'red').removeClass("fa-volume-up").addClass("fa-volume-off");
     $(".remote-vid").prop('muted', true);
@@ -165,8 +170,8 @@ var disableRemoteMicrophone = function() {
 var videoSizeFlagLoc = false;
 var videoSizeFlagRem = false;
 
-var bindChangeLocalStreamSize = function() {
-    $("body").on('click','.loc-vid-2', function () {
+var bindChangeLocalStreamSize = function () {
+    $("body").on('click', '.loc-vid-2', function () {
         if (!videoSizeFlagLoc) {
             videoSizeFlagLoc = true;
             $(".local-vid-wrapper").removeClass("col-xs-5").removeClass("col-xs-offset-1").addClass("col-xs-9");
@@ -180,8 +185,8 @@ var bindChangeLocalStreamSize = function() {
         }
     });
 };
-var bindChangeRemoteVideoSize = function() {
-    $("body").on('click','.rem-vid-2', function () {
+var bindChangeRemoteVideoSize = function () {
+    $("body").on('click', '.rem-vid-2', function () {
         if (!videoSizeFlagRem) {
             videoSizeFlagRem = true;
             $(".remote-vid-wrapper").removeClass("col-xs-5").removeClass("col-xs-offset-1").addClass("col-xs-9");
@@ -196,7 +201,12 @@ var bindChangeRemoteVideoSize = function() {
     });
 };
 
-var fadeInIconsFadeOutHeader = function() {
+var fadeInIconsFadeOutHeader = function () {
+    $("#colorLabel").fadeOut("fast");
+    $("#color").fadeOut("fast");
+    $(".nickName").fadeOut("fast");
+    $("#nickName").fadeOut("fast");
+    $(".chat-place").fadeIn("fast");
     $("#local-mic").fadeIn("fast");
     $("#local-vid").fadeIn("fast");
     $("#remote-mic").fadeIn("fast");
@@ -205,13 +215,13 @@ var fadeInIconsFadeOutHeader = function() {
     $(".title").fadeIn("slow");
 };
 
-var showMessage = function() {
+var showMessage = function () {
     var $message = $("#message");
     $message.text("Ready to connect!");
     $message.fadeIn("slow");
 };
 
-var fadeOutIcons = function(button) {
+var fadeOutIcons = function (button) {
     $("#local-mic").fadeOut("fast");
     $("#local-vid").fadeOut("fast");
     $("#remote-mic").fadeOut("fast");
@@ -219,7 +229,7 @@ var fadeOutIcons = function(button) {
     $(button).fadeOut("fast");
 };
 
-var changeConnectButton = function(button) {
+var changeConnectButton = function (button) {
     $(button).removeClass("btn-info")
         .removeClass("connectBtn")
         .addClass("disconnectBtn")
@@ -227,6 +237,41 @@ var changeConnectButton = function(button) {
         .html("Reconnect");
 };
 
+var bindEnter = function () {
+    $(window).on('keypress', function (e) {
+        var key = e.which;
+        if (key === 13) {
+            sendMessage();
+        }
+    });
+};
+
+
+var sendMessage = function () {
+    var $messageInput = $("#messageInput");
+    var message = $messageInput.val();
+    $messageInput.val(" ");
+    var nickName = window.sessionStorage.getItem('nickName');
+    if (nickName === '') {
+        nickName = 'unkown user';
+    }
+    var color = window.sessionStorage.getItem('fontColor');
+    stompClient.send("/app/chat", {}, JSON.stringify({'content': message, 'from': nickName, 'color': color}));
+};
+
+var showChatMessage = function (message) {
+    var messageContent = JSON.parse(message.body).content;
+    var from = JSON.parse(message.body).from;
+    var color = JSON.parse(message.body).color;
+    var $chatArea = $("#chat");
+    $chatArea.prepend("<p style='color: " + color + "'>" + new Date().toLocaleTimeString() + ' - ' + from + ': ' + messageContent + "</p>");
+};
+
+var removeColor = function (message) {
+    var color = JSON.parse(message.body).color;
+    console.log("remove color " + color);
+    $("#color").find("option[value='" + color + "']").remove();
+};
 
 var createConversation = function (roomId) {
     nextRTC.create(roomId);

@@ -65,16 +65,30 @@ public class MainController {
 
     @MessageMapping("/connect")
     @SendTo("/topic/connectionInfo")
-    public Message connect(Message message) throws Exception{
+    public Message connect(Message message) throws Exception {
         log.info("" + message);
         return new Message("created");
     }
 
     @MessageMapping("/leave")
     @SendTo("/topic/connectionInfo")
-    public Message leave(Message message) throws Exception{
+    public Message leave(Message message) throws Exception {
         log.info("" + message);
         return new Message("leave");
+    }
+
+    @MessageMapping("/chat")
+    @SendTo("/topic/chat")
+    public Message chat(Message message) throws Exception {
+        log.info("" + message);
+        return message;
+    }
+
+    @MessageMapping("/fontColor")
+    @SendTo("/topic/fontColor")
+    public Message fontColor(Message message) throws Exception {
+        log.info("" + message);
+        return message;
     }
 
     @GetMapping("/other-page")
