@@ -99,9 +99,9 @@ function doSubscribes() {
         console.log(JSON.parse(message.body).content);
         showChatMessage(message);
     });
-    stompClient.subscribe('/topic/fontColor', function (message) {
+    stompClient.subscribe('/topic/userInfo', function (message) {
         console.log(JSON.parse(message.body).content);
-        removeColor(message);
+        removeColorSetRemote(message);
     });
 }
 

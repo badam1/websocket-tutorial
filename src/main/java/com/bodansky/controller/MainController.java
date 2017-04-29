@@ -84,8 +84,8 @@ public class MainController {
         return message;
     }
 
-    @MessageMapping("/fontColor")
-    @SendTo("/topic/fontColor")
+    @MessageMapping("/userInfo")
+    @SendTo("/topic/userInfo")
     public Message fontColor(Message message) throws Exception {
         log.info("" + message);
         return message;

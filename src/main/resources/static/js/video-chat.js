@@ -27,9 +27,13 @@ $(function () {
 
     $body.on("click", ".connectBtn", function () {
         var color = $("#color").val();
-        window.sessionStorage.setItem('nickName', $("#nickName").val());
+        var nickName = $("#nickName").val();
+        if (nickName === '') {
+            nickName = 'unknown user';
+        }
+        window.sessionStorage.setItem('nickName', nickName);
         window.sessionStorage.setItem('fontColor', color);
-        stompClient.send("/app/fontColor", {}, JSON.stringify({'color': color}));
+        stompClient.send("/app/userInfo", {}, JSON.stringify({'from': nickName, 'color': color}));
         bindEnter();
         fadeInIconsFadeOutHeader();
         if (!isConnected) {
@@ -213,6 +217,7 @@ var fadeInIconsFadeOutHeader = function () {
     $("#remote-vid").fadeIn("fast");
     $(".header").fadeOut("fast");
     $(".title").fadeIn("slow");
+    $(".local-title").text(window.sessionStorage.getItem("nickName"));
 };
 
 var showMessage = function () {
@@ -267,9 +272,14 @@ var showChatMessage = function (message) {
     $chatArea.prepend("<p style='color: " + color + "'>" + new Date().toLocaleTimeString() + ' - ' + from + ': ' + messageContent + "</p>");
 };
 
-var removeColor = function (message) {
+var removeColorSetRemote = function (message) {
     var color = JSON.parse(message.body).color;
+    var remoteName = JSON.parse(message.body).from;
+    var nickName = window.sessionStorage.getItem('nickName');
     console.log("remove color " + color);
+    if (nickName !== remoteName) {
+        $(".remote-title").text(remoteName);
+    }
     $("#color").find("option[value='" + color + "']").remove();
 };
 
