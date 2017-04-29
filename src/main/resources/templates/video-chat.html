@@ -9,20 +9,22 @@
         </header>
         <div class="container text-center">
             <h3 id="message" class="text-info"></h3>
-            <label class="nickName" for="nickName">Nick name</label>
-            <input title="nickName" id="nickName" class="input-lg"/>
-            <label id="colorLabel" for="color" class="color">Font color</label>
-            <select id="color">
-                <option value="Grey">Grey</option>
-                <option value="Aqua">Aqua</option>
-                <option value="Chocolate">Chocolate</option>
-                <option value="Coral">Coral</option>
-                <option value="Crimson">Crimson</option>
-                <option value="Red">Red</option>
-                <option value="Blue">Blue</option>
-                <option value="Green">Green</option>
-            </select>
-            <button id="localConnectBtn" class="btn btn-lg btn-info connectBtn">Connect</button>
+            <div class="form-group col-xs-8 col-xs-offset-2">
+                <label class="nickName" for="nickName">Nick name</label>
+                <input placeholder="Nick name" title="nickName" id="nickName" class="form-control input-lg"/>
+                <label id="colorLabel" for="color" class="color">Font color</label>
+                <select id="color" class="form-control">
+                    <option value="Grey">Grey</option>
+                    <option value="Aqua">Aqua</option>
+                    <option value="Chocolate">Chocolate</option>
+                    <option value="Coral">Coral</option>
+                    <option value="Crimson">Crimson</option>
+                    <option value="Red">Red</option>
+                    <option value="Blue">Blue</option>
+                    <option value="Green">Green</option>
+                </select>
+                <button id="localConnectBtn" class="btn btn-lg btn-info connectBtn">Connect</button>
+            </div>
             <div class="row col-xs-12">
                 <div class="col-xs-5 col-xs-offset-1 local-vid-wrapper">
                     <div class="col-xs-12 text-center">
@@ -61,7 +63,7 @@
                         <input id="messageInput" title="message" type="text" placeholder="message"
                                class="form-control input-lg"/>
                         <br/>
-                            <div id="chat"></div>
+                        <div id="chat"></div>
                     </div>
                 </div>
             </div>
