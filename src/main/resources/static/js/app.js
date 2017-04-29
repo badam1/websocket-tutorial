@@ -98,7 +98,7 @@ function doSubscribes() {
 }
 
 function sendName() {
-    stompClient.send("/app/hello", {}, JSON.stringify({'content': $("#content").val()}));
+    stompClient.send("/app/hello", {}, JSON.stringify({'content': $("#name").val()}));
 }
 
 function sendMyMood() {
