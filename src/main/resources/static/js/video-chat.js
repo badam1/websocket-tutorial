@@ -31,6 +31,7 @@ $(function () {
         $("#remote-mic").fadeIn("fast");
         $("#remote-vid").fadeIn("fast");
         $(".header").fadeOut("fast");
+        $(".title").fadeIn("slow");
         if (!isConnected) {
             $message.fadeOut("slow");
             isConnected = true;
