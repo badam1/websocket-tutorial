@@ -5,7 +5,7 @@ package com.bodansky.controller;
  */
 
 import com.bodansky.domain.Greeting;
-import com.bodansky.domain.HelloMessage;
+import com.bodansky.domain.Message;
 import com.bodansky.domain.MyMood;
 import com.bodansky.service.WebSocketService;
 import org.slf4j.Logger;
@@ -19,14 +19,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/websocket")
-public class GreetingController {
+public class MainController {
 
-    private static final Logger log = LoggerFactory.getLogger(GreetingController.class);
+    private static final Logger log = LoggerFactory.getLogger(MainController.class);
 
     private final WebSocketService webSocketService;
 
     @Autowired
-    public GreetingController(WebSocketService webSocketService) {
+    public MainController(WebSocketService webSocketService) {
         this.webSocketService = webSocketService;
     }
 
@@ -48,11 +48,11 @@ public class GreetingController {
 
     @MessageMapping("/hello")
     @SendTo("/topic/greetings")
-    public Greeting greeting(HelloMessage message) throws Exception {
+    public Greeting greeting(Message message) throws Exception {
         Thread.sleep(1000); // simulated delay
         log.info("greeting() - greeting message sent {}", message);
         webSocketService.sendWelcomeMessage(message);
-        return new Greeting("Hello " + message.getName() + "!");
+        return new Greeting("Hello " + message.getContent() + "!");
     }
 
     @MessageMapping("/mood")
@@ -63,11 +63,31 @@ public class GreetingController {
         return new Greeting("My mood is " + myMood.getMyMood().getName() + "!");
     }
 
+    @MessageMapping("/connect")
+    @SendTo("/topic/connectionInfo")
+    public Message connect(Message message) throws Exception{
+        log.info("" + message);
+        return new Message("created");
+    }
+
+    @MessageMapping("/leave")
+    @SendTo("/topic/connectionInfo")
+    public Message leave(Message message) throws Exception{
+        log.info("" + message);
+        return new Message("leave");
+    }
+
     @GetMapping("/other-page")
     public String otherPage() throws InterruptedException {
         log.info("otherPage() - send message from otherPage");
         webSocketService.sendHelloMessageFromOtherPage();
         webSocketService.sendMyMoodFromOtherPage();
         return "other-page";
+    }
+
+    @GetMapping("/video-chat")
+    public String videoChat() {
+        log.info("videoChat() - open video-chat.html");
+        return "video-chat";
     }
 }

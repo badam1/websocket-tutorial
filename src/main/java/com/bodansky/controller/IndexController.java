@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class IndexController {
 
-    private static final Logger log = LoggerFactory.getLogger(GreetingController.class);
-
+    private static final Logger log = LoggerFactory.getLogger(MainController.class);
 
     @GetMapping("/")
     public String index() {

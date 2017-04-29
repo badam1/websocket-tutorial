@@ -5,7 +5,7 @@ package com.bodansky.service;
  */
 
 import com.bodansky.domain.Greeting;
-import com.bodansky.domain.HelloMessage;
+import com.bodansky.domain.Message;
 import com.bodansky.domain.Mood;
 import com.bodansky.domain.MyMood;
 import org.slf4j.Logger;
@@ -29,11 +29,11 @@ public class WebSocketService {
 
     public void sendHelloMessageFromOtherPage() throws InterruptedException {
         Thread.sleep(1000); // just to simulate delay 1 sec
-        HelloMessage message = new HelloMessage("Other Page");
+        Message message = new Message("Other Page");
         log.info("sendHelloMessageFromOtherPage() - testing message sending from a service class {}", message);
 
         // send this message for all the clients who are subscribed for /topic/greetings mapping (see in app.js)
-        messagingTemplate.convertAndSend("/topic/greetings", new Greeting("Hello " + message.getName() + "!"));
+        messagingTemplate.convertAndSend("/topic/greetings", new Greeting("Hello " + message.getContent() + "!"));
     }
 
     public void sendMyMoodFromOtherPage() throws InterruptedException {
@@ -45,10 +45,10 @@ public class WebSocketService {
         messagingTemplate.convertAndSend("/topic/mood", new Greeting("My mood " + myMood.getMyMood().getName() + "!"));
     }
 
-    public void sendWelcomeMessage(HelloMessage message) {
+    public void sendWelcomeMessage(Message message) {
         log.info("sendWelcomeMessage() - send welcome message to the index page");
 
         // send this message for all the clients who are subscribed for /topic/welcome mapping (see in app.js)
-        messagingTemplate.convertAndSend("/topic/welcome", new Greeting("Welcome " + message.getName() + " to Websocket test!"));
+        messagingTemplate.convertAndSend("/topic/welcome", new Greeting("Welcome " + message.getContent() + " to Websocket test!"));
     }
 }

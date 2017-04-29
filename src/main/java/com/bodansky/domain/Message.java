@@ -11,7 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class HelloMessage {
+public class Message {
 
-    private String name;
+    private String content;
 }

@@ -1,0 +1,31 @@
+body {
+    background-color: aliceblue;
+}
+
+.videoStream {
+    border: 1px solid;
+    border-radius: 5px;
+    border: silver;
+    width: 100%;
+    height: auto;
+}
+
+header {
+    margin: 50px;
+}
+
+.connectBtn, .disconnectBtn {
+    margin: 10px;
+}
+
+.fa {
+    font-size: 20px;
+}
+
+.display-none {
+    display: none;
+}
+
+a {
+    text-decoration: none;
+}

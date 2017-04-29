@@ -84,11 +84,21 @@ function doSubscribes() {
     stompClient.subscribe('/topic/welcome', function (message) {
         // fire this function when message come to this subscribed mapping
         showWelcomeMessage(JSON.parse(message.body).content);
-    })
+    });
+    stompClient.subscribe('/topic/connectionInfo', function (message) {
+        // fire this function when message come to this subscribed mapping
+        console.log(JSON.parse(message.body).content);
+        var content = JSON.parse(message.body).content;
+        if (content === 'created') {
+            roomCreated();
+        } else {
+            left();
+        }
+    });
 }
 
 function sendName() {
-    stompClient.send("/app/hello", {}, JSON.stringify({'name': $("#name").val()}));
+    stompClient.send("/app/hello", {}, JSON.stringify({'content': $("#content").val()}));
 }
 
 function sendMyMood() {
@@ -106,3 +116,4 @@ function showMyMood(myMood) {
 function showWelcomeMessage(message) {
     $("#welcome").html("<h1>" + message + "</h1>");
 }
+
