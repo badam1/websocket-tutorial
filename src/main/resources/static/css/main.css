@@ -30,6 +30,7 @@ header {
 a {
     text-decoration: none;
 }
+
 p {
     font-weight: 700;
 }
@@ -41,4 +42,11 @@ p {
 
 .emoji:hover {
     cursor: pointer;
+}
+
+.local-vid-wrapper, .remote-vid-wrapper {
+    -webkit-transition: width 0.3s ease, margin 0.3s ease;
+    -moz-transition: width 0.3s ease, margin 0.3s ease;
+    -o-transition: width 0.3s ease, margin 0.3s ease;
+    transition: width 0.3s ease, margin 0.3s ease;
 }
