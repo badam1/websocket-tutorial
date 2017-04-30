@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -24,6 +25,8 @@ public class MainController {
     private static final Logger log = LoggerFactory.getLogger(MainController.class);
 
     private final WebSocketService webSocketService;
+
+    private static boolean roomCreator = true;
 
     @Autowired
     public MainController(WebSocketService webSocketService) {
@@ -66,6 +69,7 @@ public class MainController {
     @MessageMapping("/connect")
     @SendTo("/topic/connectionInfo")
     public Message connect(Message message) throws Exception {
+
         log.info("" + message);
         return new Message("created");
     }
@@ -100,8 +104,15 @@ public class MainController {
     }
 
     @GetMapping("/video-chat")
-    public String videoChat() {
+    public synchronized String videoChat(Model model) {
         log.info("videoChat() - open video-chat.html");
+        if (roomCreator) {
+            model.addAttribute("roomCreator", roomCreator);
+            roomCreator = false;
+        } else {
+            model.addAttribute("roomCreator", roomCreator);
+            roomCreator = true;
+        }
         return "video-chat";
     }
 }

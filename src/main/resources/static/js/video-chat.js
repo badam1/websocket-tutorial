@@ -4,11 +4,25 @@
 
 "use strict";
 
-var isConnected = false;
+var isCreated = false;
 
 $(function () {
 
     var $message = $("#message");
+
+    var roomCreator = $("#roomCreator").val();
+    if (window.sessionStorage.getItem("roomCreator") === "undefined"
+        || window.sessionStorage.getItem("roomCreator") === null) {
+        window.sessionStorage.setItem("roomCreator", roomCreator);
+    }
+
+    if (isRoomCreator() === "true") {
+        $("#localConnectBtn").fadeIn("fast");
+        showMessage("Ready to connect!")
+    } else {
+        $("#localConnectBtn").fadeOut("fast");
+        showMessage("Waiting for room creator...")
+    }
 
     showMessage();
 
@@ -38,9 +52,9 @@ $(function () {
         stompClient.send("/app/userInfo", {}, JSON.stringify({'from': nickName, 'color': color}));
         bindEnter();
         fadeInIconsFadeOutHeader();
-        if (!isConnected) {
+        if (!isCreated && isRoomCreator() === "true") {
             $message.fadeOut("slow");
-            isConnected = true;
+            isCreated = true;
             createConversation("testRoom");
             changeConnectButton(this);
             stompClient.send("/app/connect", {}, JSON.stringify({'content': 'connected to testRoom'}));
@@ -53,7 +67,7 @@ $(function () {
 
     $body.on("click", ".disconnectBtn", function () {
         leaveConversation();
-        isConnected = false;
+        isCreated = false;
         fadeOutIcons(this);
         stompClient.send("/app/leave", {}, JSON.stringify({'content': 'leave room'}));
     });
@@ -61,11 +75,15 @@ $(function () {
 
 
 var roomCreated = function () {
-    isConnected = true;
+    isCreated = true;
+    $("#localConnectBtn").fadeIn("fast");
+    if (isRoomCreator() === 'false') {
+        showMessage("Ready to connect!");
+    }
 };
 
 var left = function () {
-    isConnected = false;
+    isCreated = false;
     var $message = $("#message");
     $message.text("Disconnected, reloading...")
         .fadeIn("slow");
@@ -231,9 +249,9 @@ var fadeInIconsFadeOutHeader = function () {
     $(".local-title").text(window.sessionStorage.getItem("nickName"));
 };
 
-var showMessage = function () {
+var showMessage = function (message) {
     var $message = $("#message");
-    $message.text("Ready to connect!");
+    $message.text(message);
     $message.fadeIn("slow");
 };
 
@@ -292,6 +310,10 @@ var removeColorSetRemote = function (message) {
         $(".remote-title").text(remoteName);
     }
     $("#color").find("option[value='" + color + "']").remove();
+};
+
+var isRoomCreator = function () {
+    return window.sessionStorage.getItem("roomCreator");
 };
 
 var createConversation = function (roomId) {
