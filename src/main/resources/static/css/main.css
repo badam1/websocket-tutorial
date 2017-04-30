@@ -8,6 +8,7 @@ body {
     border: silver;
     width: 100%;
     height: auto;
+    max-height: 40%;
 }
 
 header {
@@ -36,4 +37,8 @@ p {
 #chat {
     max-height: 400px;
     overflow-y: scroll;
+}
+
+.emoji:hover {
+    cursor: pointer;
 }

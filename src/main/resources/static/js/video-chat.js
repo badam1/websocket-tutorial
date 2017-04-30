@@ -21,6 +21,8 @@ $(function () {
     bindChangeLocalStreamSize();
     bindChangeRemoteVideoSize();
 
+    bindSomeEmoji();
+
     connect();
 
     var $body = $("body");
@@ -202,6 +204,15 @@ var bindChangeRemoteVideoSize = function () {
             $(".remote-vid-wrapper").removeClass("col-xs-10").addClass("col-xs-offset-1").addClass("col-xs-5");
             $(".local-vid-wrapper").removeClass("col-xs-3").addClass("col-xs-offset-1").addClass("col-xs-5");
         }
+    });
+};
+
+var bindSomeEmoji = function () {
+    var $body = $("body");
+    $body.on('click', '.emoji', function () {
+        var $messageInput = $("#messageInput");
+        var currentInputVal = $messageInput.val();
+        $messageInput.val(currentInputVal + $(this).html());
     });
 };
 
